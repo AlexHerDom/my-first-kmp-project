@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.androidapp"
-    compileSdk = 34
+    compileSdk = 35  // Updated to support latest Compose libraries
 
     defaultConfig {
         applicationId = "com.example.androidapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35  // Updated targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -44,12 +44,14 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.16.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
     implementation("androidx.activity:activity-compose:1.10.1")
     implementation(platform("androidx.compose:compose-bom:2025.07.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.benchmark:benchmark-common:1.3.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

@@ -1,38 +1,39 @@
 plugins {
     kotlin("multiplatform") version "1.9.22"
-    id("com.android.library") version "8.2.2"
-    id("com.android.application") version "8.2.2" apply false
+    id("com.android.library") version "8.6.1"  // Updated Android Gradle Plugin
+    id("com.android.application") version "8.6.1" apply false  // Updated AGP
     id("org.jetbrains.kotlin.android") version "2.0.21" apply false
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21" apply false
 }
 
 kotlin {
-    // Configuración para Android
+    // Target configuration - define platforms to compile for
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "1.8"  // Android compatibility
             }
         }
     }
     
-    // Configuración para iOS
+    // iOS targets - supports different architectures
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64(),        // iOS Simulator (Intel Macs)
+        iosArm64(),      // iOS Devices  
+        iosSimulatorArm64()  // iOS Simulator (Apple Silicon)
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
+            baseName = "shared"  // Framework name for iOS consumption
+            isStatic = true      // Static linking (better performance)
         }
     }
 
     sourceSets {
-        // Código común - funciona en todas las plataformas
+        // commonMain - code shared across ALL platforms
         val commonMain by getting {
             dependencies {
-                // Aquí van las dependencias comunes
+                // Coroutines - multiplataform reactive programming
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             }
         }
         
@@ -65,7 +66,7 @@ kotlin {
 
 android {
     namespace = "com.example.myfirstkmp"
-    compileSdk = 34
+    compileSdk = 35  // Updated to support latest Compose libraries
     defaultConfig {
         minSdk = 24
     }

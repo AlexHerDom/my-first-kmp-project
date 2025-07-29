@@ -1,15 +1,22 @@
 package com.example.myfirstkmp
 
 /**
- * Interfaz que define qué información específica 
- * necesitamos de cada plataforma
+ * KMP Pattern: expect/actual
+ * 
+ * Esta interfaz define el contrato común, pero cada plataforma 
+ * tendrá su propia implementación con datos específicos.
  */
 interface Platform {
     val name: String
 }
 
 /**
- * Función expect - debe ser implementada por cada plataforma
- * Android e iOS tendrán su propia versión
+ * expect function - KMP core concept
+ * 
+ * Declara que esperamos una implementación de esta función en cada plataforma.
+ * El compilador de KMP se encarga de resolver cuál implementación usar.
+ * 
+ * Android → Platform.android.kt (actual fun)
+ * iOS → Platform.ios.kt (actual fun)
  */
 expect fun getPlatform(): Platform

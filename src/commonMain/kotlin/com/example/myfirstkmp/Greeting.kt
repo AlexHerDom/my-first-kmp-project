@@ -1,12 +1,25 @@
 package com.example.myfirstkmp
 
+import com.example.myfirstkmp.data.UserRepositoryImpl
+import com.example.myfirstkmp.domain.UserUseCase
+
 /**
- * Esta clase contiene la lógica de negocio compartida
- * Se puede usar tanto en Android como en iOS
+ * Demo Class - KMP Fundamentals
+ * 
+ * Esta clase demuestra conceptos básicos de KMP:
+ * - expect/actual pattern (getPlatform)
+ * - Shared business logic (UserUseCase integration)  
+ * - Cross-platform execution
+ * 
+ * Extension: Ahora también integra servicios de datos.
  */
 class Greeting {
-    private val platform: Platform = getPlatform()
+    private val platform: Platform = getPlatform() // expect/actual resolution
+    
+    // Integration example: Using shared business logic
+    private val userUseCase = UserUseCase(UserRepositoryImpl())
 
+    // Basic platform detection demo
     fun greet(): String {
         return "¡Hola desde ${platform.name}! 🎉"
     }
@@ -23,5 +36,43 @@ class Greeting {
             "¡Bienvenido a KMP!"
         )
         return messages.random()
+    }
+    
+    // Service integration demo - shows how to use shared business logic
+    suspend fun getUsersMessage(): String {
+        return try {
+            val result = userUseCase.getValidatedUsers()
+            
+            result.fold(
+                onSuccess = { users ->
+                    "📋 Usuarios cargados: ${users.size}\n" +
+                    users.take(3).joinToString("\n") { "• ${it.name}" }
+                },
+                onFailure = { error ->
+                    "❌ Error: ${error.message}"
+                }
+            )
+        } catch (e: Exception) {
+            "❌ Error inesperado: ${e.message}"
+        }
+    }
+    
+    suspend fun findUser(id: Int): String {
+        return try {
+            val result = userUseCase.findUserById(id)
+            
+            result.fold(
+                onSuccess = { user ->
+                    "👤 Usuario encontrado:\n" +
+                    "• Nombre: ${user.name}\n" +
+                    "• Email: ${user.email}"
+                },
+                onFailure = { error ->
+                    "❌ ${error.message}"
+                }
+            )
+        } catch (e: Exception) {
+            "❌ Error: ${e.message}"
+        }
     }
 }
