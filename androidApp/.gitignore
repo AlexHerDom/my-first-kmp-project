@@ -1,0 +1,15 @@
+# ===== ANDROID APP ESPECÍFICO =====
+/build
+*.apk
+*.ap_
+*.aab
+
+# ===== RELEASE BUILDS =====
+/release
+/debug
+
+# ===== GENERATED FILES =====
+/generated
+
+# ===== LINT =====
+lint-results*.xml
